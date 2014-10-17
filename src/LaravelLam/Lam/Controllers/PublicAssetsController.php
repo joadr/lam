@@ -50,12 +50,24 @@ class PublicAssetsController extends Controller {
         // In the case of a .jpeg this would be image/jpeg
         $response->header(
             'Content-type',
-            $file->getMimeType()
+            $this->getContentTypeForFile($file)
         );
 
         // We return our image here.
         return $response;
 
+    }
+
+    protected function getContentTypeForFile($file) {
+        switch ($file->getExtension()) {
+            case 'css':
+                return 'text/css';
+                break;
+            
+            default:
+                return $file->getMimeType();
+                break;
+        }
     }
 
 }

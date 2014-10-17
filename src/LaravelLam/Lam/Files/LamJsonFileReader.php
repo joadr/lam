@@ -1,8 +1,8 @@
-<?php namespace LaravelLam\Lam\Files; 
+<?php namespace LaravelLam\Lam\Files;
 /**
- * User: nicolaslopezj
- * Date: 16-10-14
- * Time: 12:26
+ * User: nicolaslopezj & joadr
+ * Date: 17-10-14
+ * Time: 12:24
  */
 class LamJsonFileReader {
 
@@ -43,7 +43,7 @@ class LamJsonFileReader {
      * Returns the path of the file
      * @return string
      */
-    protected function getFilePath() {
+    public function getFilePath() {
         return base_path() . '/lam.json';
     }
 
@@ -54,6 +54,21 @@ class LamJsonFileReader {
     protected function getFileContents() {
         $path = $this->getFilePath();
         return file_get_contents($path);
+    }
+
+    /**
+     * Creates json file with it's content
+     */
+    public function createJson(){
+        $json = fopen($this->getFilePath(), 'w');
+$content = "{
+    \"require\" : {
+    },
+    \"bower\" : [
+    ]
+}";
+        fwrite($json, $content);
+        fclose($json);
     }
 
 }

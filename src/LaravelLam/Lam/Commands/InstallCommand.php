@@ -2,30 +2,30 @@
 
 use Illuminate\Console\Command;
 use LaravelLam\Lam\Files\ThemesJsonFileReader;
-use LaravelLam\Lam\Processes\UpdateProcess;
+use LaravelLam\Lam\Processes\InstallProcess;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
- * User: nicolaslopezj
+ * User: joadr
  * Date: 16-10-14
  * Time: 12:17
  */
-class UpdateCommand extends Command {
+class InstallCommand extends Command {
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'lam:update';
+    protected $name = 'lam:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update the themes.';
+    protected $description = 'Install Lam.';
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class UpdateCommand extends Command {
      */
     public function fire()
     {
-        $process = new UpdateProcess();
+        $process = new InstallProcess();
         $process->run($this);
     }
 

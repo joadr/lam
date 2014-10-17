@@ -1,6 +1,6 @@
-<?php namespace LaravelLam\Lam\Files; 
+<?php namespace LaravelLam\Lam\Files;
 /**
- * User: nicolaslopezj
+ * User: nicolaslopezj & joadr
  * Date: 16-10-14
  * Time: 12:26
  */
@@ -59,7 +59,7 @@ class LamLockFileReader {
      * Returns the path of the file
      * @return string
      */
-    protected function getFilePath() {
+    public function getFilePath() {
         return base_path() . '/lam.lock';
     }
 
@@ -77,6 +77,16 @@ class LamLockFileReader {
         $file = fopen($this->getFilePath(), "w");
         fwrite($file, $content);
         fclose($file);
+    }
+
+    /**
+     * Creates Lam's lock file
+     */
+    public function createLock(){
+        $lock = fopen($this->getFilePath(), 'w');
+        $content = '{ "packages": {}, "bower": [] }';
+        fwrite($lock, $content);
+        fclose($lock);
     }
 
 }

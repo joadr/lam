@@ -43,6 +43,7 @@ class BowerUpdater {
 
     /**
      * Executes the process, installs each theme
+     *
      */
     public function update() {
         $to_remove = $this->getToRemove();
@@ -68,6 +69,7 @@ class BowerUpdater {
 
     /**
      * Returns the themes that have to be installed
+     *
      * @return array
      */
     protected function getToInstall() {
@@ -76,6 +78,7 @@ class BowerUpdater {
 
     /**
      * Returns the themes that have to be removed
+     *
      * @return array
      */
     protected function getToRemove() {
@@ -84,6 +87,7 @@ class BowerUpdater {
 
     /**
      * Returns the themes that have to be updated
+     *
      * @return array
      */
     protected function getToUpdate() {
@@ -92,6 +96,7 @@ class BowerUpdater {
 
     /**
      * Returns the command to remove the theme
+     *
      * @param $dependency
      * @return string
      */
@@ -101,6 +106,7 @@ class BowerUpdater {
 
     /**
      * Returns the command to install the theme
+     *
      * @param $dependency
      * @return string
      */
@@ -110,29 +116,38 @@ class BowerUpdater {
 
     /**
      * Returns the command to update the theme
+     *
      * @param $dependency
      * @return string
      */
     protected function getUpdateCommandFor($dependency) {
-        return 'bower update ' . $dependency . '';
+        return 'bower install ' . $dependency . '';
     }
 
     /**
      * Executes the command in the cmd
+     *
      * @param $command
-     * @return string
      */
     protected function execute($command) {
-        exec($command, $response);
-        foreach ($response as $message) {
-            TerminalOutput::say($this->getOutputForMessage($message));
+        while (@ob_end_flush()); // end all output buffers if any
+
+        $proc = popen($command, 'r');
+        while (!feof($proc))
+        {
+            $message = $this->getOutputForMessage(fread($proc, 4096));
+            if ($message) {
+                TerminalOutput::say($message);
+            }
+            @flush();
         }
+
         TerminalOutput::say('');
-        return $response;
     }
 
     /**
      * Returns the parsed message to output in the console
+     *
      * @param $message
      * @return string
      */
@@ -147,17 +162,19 @@ class BowerUpdater {
 
         $message = trim($message);
 
-        $message = '   ' . $message;
+        if (starts_with($message, 'progress')) {
+            return;
+        }
 
         if (starts_with($message, 'validate')) {
-            return TerminalColor::set($message, 'white+bold');
+            $message = TerminalColor::set($message, 'white+bold');
+        } elseif (starts_with($message, 'cached')) {
+            $message = TerminalColor::set($message, 'white+bold');
+        } else {
+            $message = TerminalColor::set($message, 'green');
         }
 
-        if (starts_with($message, 'cached')) {
-            return TerminalColor::set($message, 'white+bold');
-        }
-
-        return TerminalColor::set($message, 'green');
+        return '   ' . $message;
     }
 
 }

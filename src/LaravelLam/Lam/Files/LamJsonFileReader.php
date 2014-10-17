@@ -21,7 +21,10 @@ class LamJsonFileReader {
      */
     public function getRequire() {
         $content = $this->readFile();
-        return $content['require'];
+        if (array_key_exists('require', $content)) {
+            return $content['require'];
+        }
+        return [];
     }
 
     /**
@@ -30,7 +33,10 @@ class LamJsonFileReader {
      */
     public function getBower() {
         $content = $this->readFile();
-        return $content['bower'];
+        if (array_key_exists('bower', $content)) {
+            return $content['bower'];
+        }
+        return [];
     }
 
     /**

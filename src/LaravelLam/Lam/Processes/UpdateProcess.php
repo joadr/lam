@@ -1,4 +1,4 @@
-<?php namespace LaravelLam\Lam;
+<?php namespace LaravelLam\Lam\Processes;
 
 use LaravelLam\Lam\Bower\BowerUpdater;
 use LaravelLam\Lam\Communication\Api\ListOfThemesToDownloadRequest;
@@ -163,4 +163,4 @@ class UpdateProcess {
         $installer->install();
     }
 
-} 
+}

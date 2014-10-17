@@ -9,7 +9,7 @@ use File;
  * Date: 16-10-14
  * Time: 12:20
  */
-class PublicAssetsController {
+class PublicAssetsController extends Controller {
 
     /**
      * Returns a file in the public directory of a theme
@@ -25,7 +25,6 @@ class PublicAssetsController {
      * @return mixed
      */
     public function show($creator, $name, $path1, $path2 = null, $path3 = null, $path4 = null, $path5 = null, $path6 = null, $path7 = null) {
-
         // Get te path of the file
         $path = app_path() . '/views/lam/' . $creator . '/' . $name . '/public/' . $path1;
         $path .= $path2 ? '/' . $path2 : '';

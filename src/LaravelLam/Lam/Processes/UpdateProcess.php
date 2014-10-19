@@ -126,14 +126,18 @@ class UpdateProcess {
     protected function updateThemes($list) {
         $updated = [];
         foreach ($list as $theme) {
-            if ($theme['updates']) {
+            if (!$theme['found']) {
+                TerminalOutput::say(" - " . TerminalColor::set($theme['name'], 'bold'));
+                TerminalOutput::say("   Version not found\n", 'red');
+            } elseif ($theme['updates']) {
                 TerminalOutput::say(" - " . TerminalColor::set($theme['name'], 'bold'));
                 $this->updateTheme($theme);
+                $updated[$theme['name']] = $theme['hash'];
             } else {
                 TerminalOutput::say(" - " . TerminalColor::set($theme['name'], 'bold'));
                 TerminalOutput::say("   Up to date\n", 'bold+white');
+                $updated[$theme['name']] = $theme['hash'];
             }
-            $updated[$theme['name']] = $theme['tag'];
         }
 
         $this->setInstalledThemes($updated);

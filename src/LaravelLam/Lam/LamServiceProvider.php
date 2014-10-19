@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use LaravelLam\Lam\Commands\UpdateCommand;
 use LaravelLam\Lam\Commands\InstallCommand;
+use LaravelLam\Lam\Commands\CreateThemeCommand;
 use Route;
 
 class LamServiceProvider extends ServiceProvider {
@@ -24,6 +25,7 @@ class LamServiceProvider extends ServiceProvider {
 		$this->package('laravel-lam/lam');
         $this->commands('lam.command.update');
         $this->commands('lam.command.install');
+        $this->commands('lam.command.create-theme');
 	}
 
 	/**
@@ -41,6 +43,11 @@ class LamServiceProvider extends ServiceProvider {
         $this->app->bind('lam.command.install', function()
         {
             return new InstallCommand;
+        });
+
+        $this->app->bind('lam.command.create-theme', function()
+        {
+            return new CreateThemeCommand;
         });
 
         Route::get('lam/assets/{creator}/{name}/{path1}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}/{path7?}',

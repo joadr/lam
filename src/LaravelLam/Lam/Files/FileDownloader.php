@@ -12,7 +12,7 @@ class FileDownloader {
      * @return string
      */
     public function getPath() {
-        $this->path = app_path() . '/views/lam/temp/';
+        $this->path = base_path() . '/lam/views/temp/';
         if (!file_exists($this->path)) {
             mkdir($this->path, 0777, true);
         }

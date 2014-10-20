@@ -18,7 +18,7 @@ class ThemeRemover {
      * @return string
      */
     protected function getDir() {
-        return app_path() . '/views/lam/' . $this->theme_name;
+        return base_path() . '/lam/views/' . $this->theme_name;
     }
 
     /**

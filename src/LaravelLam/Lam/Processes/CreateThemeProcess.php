@@ -26,26 +26,28 @@ class CreateThemeProcess {
      */
     public function run($command) {
         TerminalOutput::say("Creating new project", 'green');
-        $themename = $command->argument('name');
-        if($this->isCreated($themename)){
-            return TerminalOutput::say("Error: A project with the name {$themename} already exists", 'red');
+        $theme_name = $command->argument('name');
+        if($this->isCreated($theme_name)){
+            return TerminalOutput::say("Error: A project with the name {$theme_name} already exists", 'red');
         }
 
         // Create folders.
-        $create = $this->createFolders($themename);
+        $create = $this->createFolders($theme_name);
 
         // Create json file
-        $json = $this->createJson($create, $themename);
+        $json = $this->createJson($create, $theme_name);
 
-        TerminalOutput::say("Project {$themename} created successfully", 'green');
+        TerminalOutput::say("Project {$theme_name} created successfully", 'green');
 
     }
 
     /**
      * Checks if lam's new project already exists.
+     * @param $theme_name
+     * @return bool
      */
-    public function isCreated($themename) {
-        $dir = app_path().'/views/lam/'.$themename;
+    public function isCreated($theme_name) {
+        $dir = base_path() . '/lam/views/' . $theme_name;
         if (!file_exists($dir) && !is_dir($dir)) {
             return false;
         } else {
@@ -55,19 +57,20 @@ class CreateThemeProcess {
 
     /**
      * Creates the new project's folders.
-     * @return $theme_path_part -> the full path to the project's folder.
+     * @param $theme_name
+     * @return string $theme_path_part -> the full path to the project's folder.
      */
-    public function createFolders($themename){
-        $lam_path = app_path().'/views/lam/';
-        $themePath = explode('/', $themename);
+    public function createFolders($theme_name){
+        $lam_path = base_path() . '/lam/views/';
+        $themePath = explode('/', $theme_name);
         $theme_path_part = $lam_path;
-        foreach($themePath as $folder){
-            var_dump($theme_path_part.'/'.$folder);
-            if (!file_exists($theme_path_part.'/'.$folder) && !is_dir($theme_path_part.'/'.$folder)) {
-                $theme_path_part = $theme_path_part.'/'.$folder;
+        foreach ($themePath as $folder) {
+            var_dump($theme_path_part . '/' . $folder);
+            if (!file_exists($theme_path_part . '/' . $folder) && !is_dir($theme_path_part.'/'.$folder)) {
+                $theme_path_part = $theme_path_part . '/' . $folder;
                 mkdir($theme_path_part, 0777, true);
             } else {
-                $theme_path_part = $theme_path_part.'/'.$folder;
+                $theme_path_part = $theme_path_part . '/' . $folder;
             }
         }
         mkdir($theme_path_part.'/public', 0777, true);
@@ -76,13 +79,15 @@ class CreateThemeProcess {
 
     /**
      * Create's the json file of the project
+     * @param $path
+     * @param $theme_name
      */
-    public function createJson($path, $themename){
+    public function createJson($path, $theme_name){
         $json = fopen($path.'/lam.json', 'w');
         $name = \Config::get('workbench.name');
         $email = \Config::get('workbench.email');
         $arr = array(
-            "name" => $themename,
+            "name" => $theme_name,
             "description" => "",
             "keywords" => array(),
             "license" => "",

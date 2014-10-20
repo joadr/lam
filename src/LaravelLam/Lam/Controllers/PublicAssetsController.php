@@ -26,7 +26,7 @@ class PublicAssetsController extends Controller {
      */
     public function show($creator, $name, $path1, $path2 = null, $path3 = null, $path4 = null, $path5 = null, $path6 = null, $path7 = null) {
         // Get te path of the file
-        $path = app_path() . '/views/lam/' . $creator . '/' . $name . '/public/' . $path1;
+        $path = base_path() . '/lam/views/' . $creator . '/' . $name . '/public/' . $path1;
         $path .= $path2 ? '/' . $path2 : '';
         $path .= $path3 ? '/' . $path3 : '';
         $path .= $path4 ? '/' . $path4 : '';

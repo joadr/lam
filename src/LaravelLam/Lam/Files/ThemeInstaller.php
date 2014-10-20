@@ -55,7 +55,7 @@ class ThemeInstaller {
      * @return string
      */
     protected function getTempDestination() {
-        $path = app_path() . '/views/lam/temp';
+        $path = base_path() . '/lam/views/temp';
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
@@ -70,7 +70,7 @@ class ThemeInstaller {
      */
     protected function getFinalDestination() {
         $parts = explode('/', $this->theme_name);
-        $path = app_path() . '/views/lam/' . $parts[0];
+        $path = base_path() . '/lam/views/' . $parts[0];
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }

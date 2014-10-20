@@ -22,7 +22,7 @@ class LamServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('laravel-lam/lam');
+		$this->package('laravel-lam/lam', 'lam', base_path() . '/lam');
         $this->commands('lam.command.update');
         $this->commands('lam.command.install');
         $this->commands('lam.command.create-theme');

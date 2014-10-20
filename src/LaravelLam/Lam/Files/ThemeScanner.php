@@ -19,7 +19,7 @@ class ThemeScanner {
     }
 
     protected function getAllLamJson() {
-        $lams = $this->getLamsInSubdir(app_path() . '/views/lam');
+        $lams = $this->getLamsInSubdir(base_path() . '/lam/views');
         return $lams;
     }
 

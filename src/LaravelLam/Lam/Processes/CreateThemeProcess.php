@@ -65,7 +65,6 @@ class CreateThemeProcess {
         $themePath = explode('/', $theme_name);
         $theme_path_part = $lam_path;
         foreach ($themePath as $folder) {
-            var_dump($theme_path_part . '/' . $folder);
             if (!file_exists($theme_path_part . '/' . $folder) && !is_dir($theme_path_part.'/'.$folder)) {
                 $theme_path_part = $theme_path_part . '/' . $folder;
                 mkdir($theme_path_part, 0777, true);

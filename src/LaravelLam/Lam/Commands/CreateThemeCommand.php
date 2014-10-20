@@ -55,7 +55,7 @@ class CreateThemeCommand extends Command {
     public function getArguments()
     {
         return array(
-            array("name", InputArgument::OPTIONAL, "Create new theme command", "new-theme")
+            array("name", InputArgument::REQUIRED, "Create new theme command")
         );
     }
 
